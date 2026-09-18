@@ -22,4 +22,6 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 poly_hok_raymarching_demo-*.tar
 
-.elixir_ls/
+/.elixir_ls/
+
+mix.lock
