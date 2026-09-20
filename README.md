@@ -42,7 +42,7 @@ For a more detailed breakdown of how this demo works, please, visit the [PolyHok
    mix run scripts/ray_marching_demo.exs 30
    ```
 
-  To exit, close the window or press ESC. The code will detect the window termination and cleanly terminate the GPU worker loop.
+    To exit, close the window or press ESC. The code will detect the window termination and cleanly terminate the GPU worker loop.
 
 ## License
 
