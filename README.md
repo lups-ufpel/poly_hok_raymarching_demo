@@ -11,10 +11,7 @@ For a more detailed breakdown of how this demo works, please, visit the [PolyHok
 ## Prerequisites
 
 * **PolyHok DSL**. Take a look at the [PolyHok Installation Guide](https://lups.inf.ufpel.edu.br/polyhok/doku.php?id=polyhok-install) for more information on how to install and use PolyHok in your system.
-* **SDL2 Development Libraries** (required by the [SimpleSDL2](https://github.com/lups-ufpel/simple_sdl_for_elixir) Elixir library):
-  * Ubuntu / Debian: `sudo apt-get install libsdl2-dev`
-  * Arch Linux: `sudo pacman -S sdl2`
-  * macOS: `brew install sdl2`
+* **SDL2 Development Libraries**. Check the [SimpleSDL2](https://github.com/lups-ufpel/simple_sdl_for_elixir) repository for installation instructions on your platform.
 
 ## Getting Started
 
