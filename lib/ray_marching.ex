@@ -204,7 +204,9 @@ PolyHok.defmodule RayMarching do
     end
   end
 
-  defp render_loop(gpu_array, dim_x, dim_y) do
+  defp render_loop(gpu_array, dim_x, dim_y, fps) do
+    start_time = System.monotonic_time()
+
     threads_per_block = 16
     blocks_x = div(dim_x + threads_per_block - 1, threads_per_block)
     blocks_y = div(dim_y + threads_per_block - 1, threads_per_block)
@@ -225,17 +227,25 @@ PolyHok.defmodule RayMarching do
 
     # Pega o resultado da renderização na GPU e envia para o processo do SDL2 para atualizar a textura
     result_ram = gpu_array |> PolyHok.get_gnx()
-
     send(:sdl2, {:render, result_ram})
 
+    end_time = System.monotonic_time()
+
+    render_time_ms = System.convert_time_unit(end_time - start_time, :native, :millisecond)
+    max_time_ms = (1.0 / fps) * 1000.0
+
+    if (render_time_ms < max_time_ms) do
+      Process.sleep(floor(max_time_ms - render_time_ms))
+    end
+
     # Recursão para continuar o loop de renderização
-    render_loop(gpu_array, dim_x, dim_y)
+    render_loop(gpu_array, dim_x, dim_y, fps)
   end
 
-  def render(dim_x, dim_y) do
+  def start_render(dim_x, dim_y, fps) do
     gpu_array = PolyHok.new_gnx({dim_x, dim_y}, :s32)
 
-    render_worker_pid = spawn(fn -> render_loop(gpu_array, dim_x, dim_y) end)
+    render_worker_pid = spawn(fn -> render_loop(gpu_array, dim_x, dim_y, fps) end)
 
     sdl_monitor_ref = Process.whereis(:sdl2) |> Process.monitor
 
